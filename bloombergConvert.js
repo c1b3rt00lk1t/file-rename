@@ -17,7 +17,7 @@ fs.readdir(directory, (error, files) => {
 
     let pdfFile = directory + '/' + file;
 
-    const firstUnderscore = file.indexOf('-');
+    const firstUnderscore = file.indexOf('- Bloomberg');
     const name = [...file].slice(0, firstUnderscore - 1).join('');
     const composed = " - Bloomberg - " + name;
 
