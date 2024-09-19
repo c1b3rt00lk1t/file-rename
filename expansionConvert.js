@@ -2,7 +2,7 @@ const fs = require("fs");
 
 
 // Starting from a hardcoded directory
-const directory = "/mnt/c/Retrospectiva/ZParaRenombrar/Expansión/";
+const directory = "C:/Retrospectiva/ZParaRenombrar/Expansión";
 
 // const directory = process.argv[2];
 console.log(directory)
