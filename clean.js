@@ -11,8 +11,7 @@ if (!folder) {
   process.exit(1);
 }
 const directory = folderPath + folder;
-console.log(directory)
-// 
+console.log(directory);
 
 fs.readdir(directory, (error, files) => {
   if (error) {
