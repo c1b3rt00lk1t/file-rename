@@ -2,9 +2,15 @@ const fs = require("fs");
 
 
 // Starting from a hardcoded directory
-const directory = "/mnt/c/Retrospectiva/ZParaRenombrar/Bloomberg";
+const folderPath = "C:/Retrospectiva/ZParaRenombrar/";
 
-// const directory = process.argv[2];
+const folder = process.argv[2];
+
+if (!folder) {
+  console.error('Please provide a folder as the first argument.');
+  process.exit(1);
+}
+const directory = folderPath + folder;
 console.log(directory)
 // 
 
