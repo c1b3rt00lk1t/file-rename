@@ -59,8 +59,8 @@ async function processFolder(folderPath) {
     const fullPath = path.join(folderPath, file);
     console.log(`\nFile: ${file}`);
 
-    // Open with Foxit Reader (adjust path if needed)
-    exec(`start "" "C:\\Program Files (x86)\\Foxit Software\\Foxit PDF Reader\\FoxitPDFReader.exe" "${fullPath}"`);
+    // Uncomment to open with Foxit Reader (adjust path if needed)
+    // exec(`start "" "C:\\Program Files (x86)\\Foxit Software\\Foxit PDF Reader\\FoxitPDFReader.exe" "${fullPath}"`);
 
     const titles = await extractTitles(fullPath);
     titles.forEach((title, idx) => {
