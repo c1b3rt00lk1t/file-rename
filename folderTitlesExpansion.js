@@ -13,11 +13,26 @@ async function extractTitles(pdfPath) {
     const page = await pdf.getPage(pageNum);
     const content = await page.getTextContent();
 
+    let prevFontSize = null;
+    let currentLine = '';
+
     content.items.forEach((item) => {
       if (item.transform && item.str && item.height > 15) {
-        titles.push(item.str);
+        const fontSize = item.height;
+        if (prevFontSize === fontSize) {
+          currentLine += ' ' + item.str;
+        } else {
+          if (currentLine) titles.push(currentLine.trim());
+          currentLine = item.str;
+          prevFontSize = fontSize;
+        }
+      } else {
+        if (currentLine) titles.push(currentLine.trim());
+        currentLine = '';
+        prevFontSize = null;
       }
     });
+    if (currentLine) titles.push(currentLine.trim());
   }
   return titles;
 }
