@@ -70,6 +70,7 @@ async function processFolder(folderPath) {
     console.log(`Copied to: ${newPath}`);
   }
 
+  console.log(`Remember to run clean.js on the result`);
   // Exit the script after processing all PDFs
   process.exit(0);
 }
