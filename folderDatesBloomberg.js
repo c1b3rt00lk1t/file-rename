@@ -45,7 +45,7 @@ async function processFolder(folderPath) {
       continue;
     }
 
-    const newName = `${dateStr} ${file}`;
+    const newName = `${dateStr}${file}`;
     const newPath = path.join(outDir, newName);
     fs.copyFileSync(fullPath, newPath);
     console.log(`  Copied to: ${newName}`);
