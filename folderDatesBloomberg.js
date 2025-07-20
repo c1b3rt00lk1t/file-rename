@@ -12,15 +12,15 @@ async function extractDate(pdfPath) {
   const text = content.items.map(item => item.str).join(' ');
 
   // Match date in format: Mon DD, YYYY (e.g., May 2, 2025)
-  const dateRegex = /\b(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+(\d{1,2}),\s+(\d{4})\b/;
+  const dateRegex = /\b(Jan|Feb|Mar|Apr|May|June|July|Aug|Sep|Oct|Nov|Dec)\s+(\d{1,2}),\s+(\d{4})\b/;
   const match = text.match(dateRegex);
 
   if (!match) return null;
 
   // Convert to YYYYMMDD
   const months = {
-    Jan: '01', Feb: '02', Mar: '03', Apr: '04', May: '05', Jun: '06',
-    Jul: '07', Aug: '08', Sep: '09', Oct: '10', Nov: '11', Dec: '12'
+    Jan: '01', Feb: '02', Mar: '03', Apr: '04', May: '05', June: '06',
+    July: '07', Aug: '08', Sep: '09', Oct: '10', Nov: '11', Dec: '12'
   };
   const month = months[match[1]];
   const day = match[2].padStart(2, '0');
