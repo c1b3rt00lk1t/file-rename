@@ -1,4 +1,4 @@
-const fs = require("fs");
+import fs from "fs";
 
 
 // Starting from a hardcoded directory
@@ -14,6 +14,9 @@ fs.readdir(directory, (error, files) => {
   }
 
   for (let file of files) {
+    if (!file.includes(".pdf")) {
+      continue;
+    }
 
     let pdfFile = directory + '/' + file;
 
