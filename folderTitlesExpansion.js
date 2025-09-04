@@ -1,7 +1,12 @@
+/**
+ * TODO:
+ * select several titles to make DIFFERENT files, when the nummbers are separated by ;
+ * 1,2;3,4;5
+ */
+
 import fs from 'fs';
 import path from 'path';
 import readline from 'readline';
-import { exec } from 'child_process';
 
 async function extractTitles(pdfPath) {
   const { default: pdfjsLib } = await import('pdfjs-dist/legacy/build/pdf.js');
@@ -67,22 +72,36 @@ async function processFolder(folderPath) {
       console.log(`${idx + 1}: ${title}`);
     });
 
-    const answer = await promptUser('Enter the numbers of the lines to combine for the new filename (comma separated, or leave blank to skip): ');
+    const answer = await promptUser('Enter the numbers of the lines to combine for the new filename (use ; to separate different files, comma for combining lines): ');
     if (!answer.trim()) continue;
 
-    const indices = answer.split(',').map(s => parseInt(s.trim(), 10) - 1).filter(i => i >= 0 && i < titles.length);
-    if (indices.length === 0) continue;
+    // Split by ';' to get different file groups
+    const groups = answer.split(';').map(group => group.trim()).filter(group => group.length > 0);
+    
+    if (groups.length === 0) continue;
 
     // Get the prefix (first 23 characters)
     const prefix = file.substring(0, 23);
 
-    // Build the new name
-    const newTitle = indices.map(i => titles[i]).join(' ').replace(/[\\/:*?"<>|]/g, '').trim();
-    const newName = `${prefix}${newTitle}.pdf`;
-    const newPath = path.join(renamedDir, newName);
+    // Process each group to create a separate file
+    groups.forEach((group, groupIndex) => {
+      const indices = group.split(',').map(s => parseInt(s.trim(), 10) - 1).filter(i => i >= 0 && i < titles.length);
+      
+      if (indices.length === 0) {
+        console.log(`Skipping group ${groupIndex + 1}: no valid indices`);
+        return;
+      }
 
-    fs.copyFileSync(fullPath, newPath);
-    console.log(`Copied to: ${newPath}`);
+      // Build the new name for this group (no suffix)
+      const newTitle = indices.map(i => titles[i]).join(' ').replace(/[\\/:*?"<>|]/g, '').trim();
+      const newName = `${prefix}${newTitle}.pdf`;
+      const newPath = path.join(renamedDir, newName);
+
+      // Copy the same original file with the new name
+      fs.copyFileSync(fullPath, newPath);
+      console.log(`Copied to: ${newPath}`);
+      console.log(`  Based on: ${indices.map(i => `"${titles[i]}"`).join(' + ')}`);
+    });
   }
 
   console.log(`Remember to run clean.js on the result`);
