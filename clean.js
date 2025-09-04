@@ -22,7 +22,7 @@ fs.readdir(directory, (error, files) => {
 
     let pdfFile = directory + '/' + file;
 
-    const clean = file.replace(/[“”‘’&\/\\#,+()$~%'":€*?<>{}]/g,'_');
+    const clean = file.replace(/[“”‘’&\/\\#,+()$~%'":€*?¿<>{}]/g,'_');
 
     let renameFile = directory + '/' + clean ;
 
